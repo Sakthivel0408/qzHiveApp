@@ -1,0 +1,42 @@
+<div class="log_in">
+    <img style="width:80px;height:80px;" src="image/icon_2.png" alt="logo" />
+    <h2 style="color:white;">Welcome to QzHive</h2>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <table align="center">
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="username"
+              placeholder="Enter Username"
+              [(ngModel)]="loginData.username"
+              required
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter Password"
+              [(ngModel)]="loginData.password"
+              required
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="submit" class="subm">Login</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <div style="font-weight: lighter;">
+      New User?
+      <a routerLink="/register">Register Here<br /><br /></a>
+      <!-- Forgot Password?
+      <a routerLink="/reset-pass">Reset Password</a> -->
+    </div>
+  </div>
+  

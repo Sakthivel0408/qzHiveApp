@@ -1,0 +1,190 @@
+<div class="header-container">
+    <h1 class="header-title">Manage Quizzes</h1>
+    <p class="header-description">View, update, or delete your quizzes with ease.</p>
+    <div class="header-divider"></div>
+    <button class="back-btn" routerLink="/admin-home">Go to Home</button>
+</div>
+<div class="quiz-wrapper">
+    <div class="quiz-container" id="quiz-container">
+        <ng-container *ngIf="!loading; else loadingTemplate">
+            <ng-container *ngIf="!isEditing; else editTemplate">
+                <table class="quiz-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Difficulty</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let quiz of quizzes; let i = index; trackBy: trackById">
+                            <td>{{ quiz.title }}</td>
+                            <td>{{ quiz.category }}</td>
+                            <td>{{ quiz.difficulty }}</td>
+                            <td>
+                                <button class="update-btn" (click)="editQuiz(quiz)">Update</button>
+                                <button class="delete-btn" (click)="deleteQuiz(quiz._id)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p *ngIf="quizzes.length === 0" class="no-quizzes">No quizzes available.</p>
+                <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+            </ng-container>
+            <ng-template #editTemplate>
+                <ng-container *ngIf="!showPreview; else previewTemplate">
+                    <form #editQuizForm="ngForm" (ngSubmit)="updateQuiz(editQuizForm.value)">
+                        <div class="form-group">
+                            <label for="title" class="form-label">Quiz Title</label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                class="form-input"
+                                [(ngModel)]="selectedQuiz.title"
+                                required
+                                placeholder="Enter quiz title"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                class="form-input"
+                                [(ngModel)]="selectedQuiz.description"
+                                required
+                                placeholder="Enter quiz description"
+                            ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="category" class="form-label">Category</label>
+                            <input
+                                type="text"
+                                id="category"
+                                name="category"
+                                class="form-input"
+                                [(ngModel)]="selectedQuiz.category"
+                                required
+                                placeholder="Enter quiz category (e.g., Computer Science)"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="difficulty" class="form-label">Difficulty</label>
+                            <select
+                                id="difficulty"
+                                name="difficulty"
+                                class="form-input"
+                                [(ngModel)]="selectedQuiz.difficulty"
+                                required
+                            >
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags" class="form-label">Tags (comma-separated)</label>
+                            <input
+                                type="text"
+                                id="tags"
+                                name="tags"
+                                class="form-input"
+                                [(ngModel)]="tagsInput"
+                                placeholder="Enter tags (e.g., data structures, cs, quiz)"
+                            >
+                        </div>
+                        <div class="questions-section">
+                            <h3>Questions</h3>
+                            <div *ngFor="let question of selectedQuiz.questions; let i = index; trackBy: trackByIndex" class="question">
+                                <div class="question-header" (click)="toggleQuestion(i)">
+                                    <span>Question {{ i + 1 }}: {{ question.questionText || 'New Question' }}</span>
+                                    <span class="toggle-icon">{{ expandedQuestions[i] ? '−' : '+' }}</span>
+                                </div>
+                                <div class="question-content" [ngClass]="{'expanded': expandedQuestions[i]}">
+                                    <div class="form-group">
+                                        <label class="form-label">Question Text</label>
+                                        <input
+                                            type="text"
+                                            [id]="'questionText' + i"
+                                            [name]="'questionText' + i"
+                                            class="form-input"
+                                            [(ngModel)]="question.questionText"
+                                            required
+                                            placeholder="Enter question text"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Options</label>
+                                        <div *ngFor="let option of question.options; let j = index; trackBy: trackByIndex" class="option-input">
+                                            <div class="option-row">
+                                                <input
+                                                    type="text"
+                                                    [id]="'option_' + i + '_' + j"
+                                                    [name]="'option_' + i + '_' + j"
+                                                    class="form-input"
+                                                    [(ngModel)]="question.options[j]"
+                                                    required
+                                                    placeholder="Enter option {{ j + 1 }}"
+                                                >
+                                                <button type="button" class="remove-option-btn" (click)="removeOption(i, j)">Remove</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="add-option-btn" (click)="addOption(i)">Add Option</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Correct Option Index</label>
+                                        <input
+                                            type="number"
+                                            [id]="'correctOptionIndex' + i"
+                                            [name]="'correctOptionIndex' + i"
+                                            class="form-input"
+                                            [(ngModel)]="question.correctOptionIndex"
+                                            required
+                                            [min]="0"
+                                            [max]="question.options.length - 1"
+                                            placeholder="Enter correct option index (0-{{ question.options.length - 1 }})"
+                                        >
+                                    </div>
+                                    <button type="button" class="remove-btn" (click)="removeQuestion(i)">Remove Question</button>
+                                </div>
+                            </div>
+                            <button type="button" class="add-btn" (click)="addQuestion()">Add Question</button>
+                        </div>
+                        <div class="form-actions">
+                            <button class="submit-btn" type="submit" [disabled]="editQuizForm.invalid">Update Quiz</button>
+                            <button class="preview-btn" type="button" (click)="togglePreview()">Preview Quiz</button>
+                            <button class="cancel-btn" type="button" (click)="cancelEdit()">Cancel</button>
+                        </div>
+                    </form>
+                </ng-container>
+                <ng-template #previewTemplate>
+                    <div class="preview-container">
+                        <h3>Quiz Preview</h3>
+                        <p><strong>Title:</strong> {{ selectedQuiz.title }}</p>
+                        <p><strong>Description:</strong> {{ selectedQuiz.description }}</p>
+                        <p><strong>Category:</strong> {{ selectedQuiz.category }}</p>
+                        <p><strong>Difficulty:</strong> {{ selectedQuiz.difficulty }}</p>
+                        <p><strong>Tags:</strong> {{ tagsInput || 'None' }}</p>
+                        <h4>Questions:</h4>
+                        <div *ngFor="let question of selectedQuiz.questions; let i = index" class="preview-question">
+                            <p><strong>Question {{ i + 1 }}:</strong> {{ question.questionText }}</p>
+                            <ul>
+                                <li *ngFor="let option of question.options; let j = index">
+                                    {{ j + 1 }}. {{ option }}
+                                    <span *ngIf="j === question.correctOptionIndex" class="correct-option">(Correct)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="back-btn" (click)="togglePreview()">Back to Edit</button>
+                    </div>
+                </ng-template>
+            </ng-template>
+        </ng-container>
+        <ng-template #loadingTemplate>
+            <h2>Loading...</h2>
+            <p class="loading">Please wait while we load the quizzes.</p>
+        </ng-template>
+    </div>
+</div>

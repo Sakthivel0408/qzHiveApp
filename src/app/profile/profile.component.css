@@ -1,0 +1,23 @@
+.prof {
+    background-color: transparent;
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    width: 350px;
+    border:double;
+    border-color:darkred;
+}
+
+div{
+    padding: 20px;
+}
+
+.subm {
+    height: 45px;
+    background-color:crimson;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}

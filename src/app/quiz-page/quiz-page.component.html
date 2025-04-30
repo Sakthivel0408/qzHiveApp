@@ -1,0 +1,37 @@
+<div class="header-container">
+    <h1 class="header-title">Welcome to the Knowledge Challenge</h1>
+    <p class="header-description">Test your skills with our engaging quiz! Answer the questions below and see how you score.</p>
+    <div class="header-divider"></div>
+</div>
+
+<div class="quiz-wrapper">
+    <div class="quiz-container" id="quiz-container">
+        <ng-container *ngIf="quiz; else loading">
+            <button class="exit-btn" (click)="exitQuiz()">Exit Quiz</button>
+            <form #quizForm="ngForm" (ngSubmit)="submitQuiz(quizForm.value)">
+                <h2>{{ quiz.title }}</h2>
+                <div *ngFor="let question of quiz.questions; let i = index" class="question">
+                    <p class="question-text">{{ i + 1 }}. {{ question.questionText }}</p>
+                    <div *ngFor="let option of question.options; let j = index" class="option">
+                        <label class="opt">
+                            <input
+                                class="ip_rd"
+                                type="radio"
+                                [name]="'question' + i"
+                                [value]="j"
+                                ngModel
+                                required
+                            >
+                            <span>{{ option }}</span>
+                        </label>
+                    </div>
+                </div>
+                <button class="submit-btn" type="submit">Submit Quiz</button>
+            </form>
+        </ng-container>
+        <ng-template #loading>
+            <h2>Loading Quiz...</h2>
+            <p class="loading">Please wait while we fetch your quiz.</p>
+        </ng-template>
+    </div>
+</div>

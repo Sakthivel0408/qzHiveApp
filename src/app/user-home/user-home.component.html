@@ -1,0 +1,37 @@
+<form>
+    <div class="home_container">
+        <header class="header">
+            <img src="image/icon_2.png" alt="QzHive Logo" class="logo">
+            <h1>Welcome to QzHive</h1>
+            <nav>
+                <ul>
+                    <li><a routerLink="/home">Home</a></li>
+                    <li><a routerLink="/quizzes">Quizzes</a></li>
+                    <li><a routerLink="/leaderboard">Leaderboard</a></li>
+                    <li><a routerLink="/profile">Profile</a></li>
+                    <li><a (click)="logout()" style="cursor: pointer;">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+            <section class="welcome">
+                <h2>Test Your Knowledge</h2>
+                <p>Challenge yourself with exciting quizzes on various topics and climb the leaderboard!</p>
+                <a routerLink="/join" class="btn">Join a Quiz</a>
+                <!-- <a routerLink="create.html" class="btn">Create a Quiz</a> -->
+            </section>
+            <section class="features">
+                <div class="feature">
+                    <h3>Wide Range of Topics</h3>
+                    <p>Explore quizzes in science, history, sports, and more!</p>
+                </div>
+                <div class="feature">
+                    <h3>Compete with Friends</h3>
+                    <p>Challenge your friends and compare scores on the leaderboard.</p>
+                </div>
+                <div class="feature">
+                    <h3>Earn Achievements</h3>
+                    <p>Unlock badges and rewards as you progress.</p>
+                </div>
+            </section>
+    </div>
+</form>

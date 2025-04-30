@@ -1,0 +1,217 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.header-container {
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    max-width: 900px;
+    border-radius: 15px 15px 0 0;
+}
+
+.header-title {
+    font-size: 36px;
+    color: #ffb347;
+    margin: 0;
+    letter-spacing: 1.5px;
+}
+
+.header-description {
+    font-size: 18px;
+    color: #ffffff;
+    margin: 10px 0 20px;
+    opacity: 0.9;
+}
+
+.header-divider {
+    width: 100px;
+    height: 4px;
+    background: #ff6f61;
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.quiz-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.quiz-container {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.quiz-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.quiz-container::-webkit-scrollbar-thumb {
+    background-color: orange;
+    border-radius: 5px;
+}
+
+.quiz-container h3 {
+    font-size: 24px;
+    color: #ffb347;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.07);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.form-input:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: #cccccc;
+}
+
+textarea.form-input {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.questions-section {
+    margin-top: 30px;
+}
+
+.question {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.question:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.option-input {
+    margin-bottom: 10px;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #ff4d4d;
+}
+
+.submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.add-btn {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+.remove-btn {
+    display: block;
+    width: 150px;
+    padding: 8px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+    background-color: #c82333;
+}
+
+.loading {
+    text-align: center;
+    font-size: 18px;
+    color: yellow;
+}
+
+.back-button-container {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.back-btn {
+    padding: 10px 20px;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
+}

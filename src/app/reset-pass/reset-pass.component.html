@@ -1,0 +1,38 @@
+<div class="reset_pass">
+    <img style="height: 80px; width: 80px;" src="image/icon_2.png" alt="Reset Icon">
+    <h2>Reset Your Password</h2>
+    <form>
+        <table>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" name="email" placeholder="Enter your email" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="button" class="subm">Send OTP</button></td>
+            </tr>
+            <tr>
+                <td>OTP:</td>
+                <td><input type="text" id="otp" name="otp" placeholder="Enter OTP" onkeyup="enablePasswordFields()" required></td>
+            </tr>
+            <tr>
+                <td>New Password:</td>
+                <td><input type="password" id="new_password" name="new_password" placeholder="Enter new password" readonly required></td>
+            </tr>
+            <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" readonly required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" class="subm" value="Reset Password">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Remembered your password? <a routerLink="/login">Login</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

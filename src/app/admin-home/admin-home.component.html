@@ -1,0 +1,36 @@
+<form>
+    <div class="home_container">
+        <header class="header">
+            <img src="image/icon_2.png" alt="QzHive Logo" class="logo">
+            <h1>Welcome to QzHive Admin</h1>
+            <nav>
+                <ul>
+                    <li><a routerLink="/admin-home">Home</a></li>
+                    <li><a routerLink="/create-quiz">Create Quiz</a></li>
+                    <li><a routerLink="/manage-quizzes">Manage Quizzes</a></li>
+                    <li><a (click)="logout()" style="cursor: pointer;">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section class="welcome">
+            <h2>Create and Manage Quizzes</h2>
+            <p>As an admin, you can create new quizzes, manage existing ones, and oversee user activity.</p>
+            <a routerLink="/create-quiz" class="btn">Create a Quiz</a>
+            <a routerLink="/manage-quizzes" class="btn">Manage Quizzes</a>
+        </section>
+        <section class="features">
+            <div class="feature">
+                <h3>Create Engaging Quizzes</h3>
+                <p>Design quizzes with a variety of question types and topics.</p>
+            </div>
+            <div class="feature">
+                <h3>Track Quiz Performance</h3>
+                <p>Monitor user participation and quiz statistics.</p>
+            </div>
+            <div class="feature">
+                <h3>Manage Users</h3>
+                <p>Oversee user activity and ensure a smooth experience for everyone.</p>
+            </div>
+        </section>
+    </div>
+</form>

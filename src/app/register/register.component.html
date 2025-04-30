@@ -1,0 +1,87 @@
+<form (submit)="onSubmit($event)">
+    <div class="log_in">
+        <img style="height: 80px; width: 80px;" src="image/icon_2.png" alt="Profile Icon">
+        <h2>Get Started with QzHive</h2>
+        <table class="register-table">
+            <tr>
+                <td>Full Name:</td>
+                <td colspan="2"><input  [(ngModel)]="fullname" type="text" name="fullname" placeholder="Enter your name" required></td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                    <input  [(ngModel)]="gender" type="radio" name="gender" value="male" id="male" required>Male
+                </td>
+                <td>
+                    <input  [(ngModel)]="gender" type="radio" name="gender" value="female" id="female" required>Female
+                </td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td colspan="2"><input  [(ngModel)]="email" type="email" name="email" placeholder="Enter your email" required></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td style="width: 10%;">
+                    <select  [(ngModel)]="country_code" style="color:white;width:70px;" name="country_code">
+                        <option style="color:black;" value="91">+91</option>
+                        <option style="color:black;" value="1">+1</option>
+                        <option style="color:black;" value="44">+44</option>
+                    </select>
+                </td>
+                <td>
+                    <input  [(ngModel)]="phone" type="tel" name="phone" placeholder="Phone Number" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td colspan="2"><input  [(ngModel)]="username" type="text" name="username" placeholder="Enter username" required></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">Password:</td>
+                <td colspan="2">
+                    <input
+                        type="password"
+                        id="passid"
+                        name="password"
+                        placeholder="Enter password"
+                        [(ngModel)]="password"
+                        (input)="onPasswordInput()"
+                        required
+                    >
+                </td>
+            </tr>
+            <tr>
+                <td>Confirm Password:</td>
+                <td colspan="2">
+                    <input
+                        type="password"
+                        id="cpassid"
+                        name="confirm_password"
+                        placeholder="Confirm Password"
+                        [(ngModel)]="confirmPassword"
+                        (input)="onConfirmPasswordInput()"
+                        required
+                    >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <p [style.color]="passwordMessageColor">{{ passwordMessage }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="subm" value="Register">
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Already have an account? <a routerLink="/login">Login</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>

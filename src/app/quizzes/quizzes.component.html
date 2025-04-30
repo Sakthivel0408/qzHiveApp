@@ -1,0 +1,33 @@
+<table class="page_container">
+    <tr>
+        <td>
+            <header class="header">
+                <img src="image/icon_2.png" alt="QzHive Logo" class="logo">
+                <h1>Welcome to QzHive</h1>
+                <nav>
+                    <ul>
+                        <li><a routerLink="/home">Home</a></li>
+                        <li><a routerLink="/quizzes">Quizzes</a></li>
+                        <li><a routerLink="/leaderboard">Leaderboard</a></li>
+                        <li><a routerLink="/profile">Profile</a></li>
+                        <li><a routerLink="/login">Logout</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="quiz-container">
+                <h2 style="text-align: center;">Available Quizzes</h2>
+                <div *ngFor="let quiz of quizzes" class="quiz-card">
+                    <h3>{{ quiz.title }}</h3>
+                    <p>Description: {{ quiz.description }}</p>
+                    <p>Category: {{ quiz.category }} | Difficulty: {{ quiz.difficulty }}</p>
+                    <p>Code: {{ quiz.code }}</p>
+                    <a routerLink="/join" class="join-btn" (click)="setCode(quiz.code)">Join</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

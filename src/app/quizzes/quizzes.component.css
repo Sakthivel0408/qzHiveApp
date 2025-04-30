@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+
+.quiz-container {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+div{
+    padding-bottom: 10px;
+}
+
+.quiz-container::-webkit-scrollbar {
+    width: 12px; /* Ensure the scrollbar is wide enough to be visible */
+}
+
+.quiz-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* Light track for contrast */
+    border-radius: 5px;
+}
+
+.quiz-container::-webkit-scrollbar-thumb {
+    background-color: orange; /* Orange thumb */
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.8); /* Match container background */
+}
+
+.quiz-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding-top: 20px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.join-btn {
+    background-color: crimson;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+.join-btn:hover {
+    transform: scale(1.05);
+}
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+}
+.page_container {
+    margin-left: 100px;
+    text-align: center;
+    width: 80%;
+    max-width: 800px;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    border: double 3px darkred;
+}

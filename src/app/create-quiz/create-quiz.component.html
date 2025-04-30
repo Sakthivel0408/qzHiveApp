@@ -1,0 +1,128 @@
+<div class="header-container">
+    <h1 class="header-title">Create Your Quiz</h1>
+    <p class="header-description">Build an engaging quiz to challenge others! Fill in the details below to get started.</p>
+    <div class="header-divider"></div>
+</div>
+<div class="back-button-container">
+    <button class="back-btn" routerLink="/admin-home">Back</button>
+</div>
+<div class="quiz-wrapper">
+    <div class="quiz-container" id="quiz-container">
+        <ng-container *ngIf="!loading; else loadingTemplate">
+            <form #createQuizForm="ngForm" (ngSubmit)="submitQuiz(createQuizForm.value)">
+                <div class="form-group">
+                    <label for="title" class="form-label">Quiz Title</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        class="form-input"
+                        ngModel
+                        required
+                        placeholder="Enter quiz title"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-input"
+                        ngModel
+                        required
+                        placeholder="Enter quiz description"
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category" class="form-label">Category</label>
+                    <input
+                        type="text"
+                        id="category"
+                        name="category"
+                        class="form-input"
+                        ngModel
+                        required
+                        placeholder="Enter quiz category (e.g., Computer Science)"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="difficulty" class="form-label">Difficulty</label>
+                    <select
+                        id="difficulty"
+                        name="difficulty"
+                        class="form-input"
+                        ngModel
+                        required
+                    >
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tags" class="form-label">Tags (comma-separated)</label>
+                    <input
+                        type="text"
+                        id="tags"
+                        name="tags"
+                        class="form-input"
+                        ngModel
+                        placeholder="Enter tags (e.g., data structures, cs, quiz)"
+                    >
+                </div>
+                <div class="questions-section">
+                    <h3>Questions</h3>
+                    <div *ngFor="let question of questions; let i = index; trackBy: trackByIndex" class="question">
+                        <div class="form-group">
+                            <label class="form-label">Question {{ i + 1 }}</label>
+                            <input
+                                type="text"
+                                [id]="'questionText' + i"
+                                [name]="'questionText' + i"
+                                class="form-input"
+                                [(ngModel)]="question.questionText"
+                                required
+                                placeholder="Enter question text"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Options</label>
+                            <div *ngFor="let option of question.options; let j = index; trackBy: trackByIndex" class="option-input">
+                                <input
+                                    type="text"
+                                    [id]="'option_' + i + '_' + j"
+                                    [name]="'option_' + i + '_' + j"
+                                    class="form-input"
+                                    [(ngModel)]="question.options[j]"
+                                    required
+                                    placeholder="Enter option {{ j + 1 }}"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Correct Option Index</label>
+                            <input
+                                type="number"
+                                [id]="'correctOptionIndex' + i"
+                                [name]="'correctOptionIndex' + i"
+                                class="form-input"
+                                [(ngModel)]="question.correctOptionIndex"
+                                required
+                                min="0"
+                                max="3"
+                                placeholder="Enter correct option index (0-3)"
+                            >
+                        </div>
+                        <button type="button" class="remove-btn" (click)="removeQuestion(i)">Remove Question</button>
+                    </div>
+                    <button type="button" class="add-btn" (click)="addQuestion()">Add Question</button>
+                </div>
+                <button class="submit-btn" type="submit" [disabled]="createQuizForm.invalid">Create Quiz</button>
+            </form>
+        </ng-container>
+        <ng-template #loadingTemplate>
+            <h2>Loading...</h2>
+            <p class="loading">Please wait while we set up the quiz creation form.</p>
+        </ng-template>
+    </div>
+</div>
