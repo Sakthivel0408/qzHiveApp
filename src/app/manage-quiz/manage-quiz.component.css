@@ -6,6 +6,29 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.form-input {
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.7); /* Dark background for better contrast */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white; /* Ensure text is visible */
+    font-size: 14px;
+    appearance: none; /* Remove default browser styling */
+    cursor: pointer;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #ffb347;
+    box-shadow: 0 0 5px #ffb347;
+}
+
+.form-input option {
+    background: rgba(0, 0, 0, 0.9); /* Dark background for dropdown options */
+    color: white; /* Ensure text is visible in dropdown */
+}
+
 .header-container {
     text-align: center;
     padding: 20px;

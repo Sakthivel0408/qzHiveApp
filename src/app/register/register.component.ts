@@ -46,6 +46,11 @@ export class RegisterComponent {
   onSubmit(event: Event): void {
     event.preventDefault(); // Prevent default form submission
 
+    if (!this.fullname || !this.gender || !this.email || !this.phone || !this.username || !this.password || !this.confirmPassword) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+
     if (!this.passwordRegex.test(this.password)) {
       this.passwordMessage = 'Password must be at least 8 characters long, include 1 uppercase letter, 1 lowercase letter, and 1 number.';
       this.passwordMessageColor = 'red';

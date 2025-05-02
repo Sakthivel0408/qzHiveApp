@@ -1,11 +1,49 @@
-<div class="leaderboard-wrapper">
-    <div class="leaderboard-container" id="leaderboard-container">
-        <ng-container>
-                <h1>Leaderboard</h1>
-        </ng-container>
-        <ng-template #loading>
-            <h2>Loading Quiz...</h2>
-            <p class="loading">Please wait while we fetch the data.</p>
-        </ng-template>
+<div class="page-container">
+    <header class="header">
+        <img src="image/icon_2.png" alt="QzHive Logo" class="logo">
+        <h1>Welcome to QzHive<br></h1>
+        <nav>
+            <ul>
+                <li><a routerLink="/home">Home</a></li>
+                <li><a routerLink="/quizzes">Quizzes</a></li>
+                <li><a routerLink="/leaderboard">Leaderboard</a></li>
+                <li><a routerLink="/profile">Profile</a></li>
+                <li><a (click)="logout()" style="cursor: pointer;">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="leaderboard-container">
+      <h2>Leaderboard</h2>
+      <div class="filter-group">
+        <label for="quizCode">Filter by Quiz Code:</label>
+        <select id="quizCode" [(ngModel)]="selectedQuizCode" (ngModelChange)="onQuizCodeChange()" aria-label="Select quiz code">
+          <option [ngValue]="null">All Quizzes</option>
+          <option *ngFor="let code of quizCodes" [ngValue]="code">{{ code }}</option>
+        </select>
+      </div>
+      <div class="table-container">
+        <table *ngIf="leaderboard.length > 0 && !isLoading">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Total Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entry of leaderboard; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ entry.username }}</td>
+                <td>{{ entry.totalScore }}</td>
+              </tr>
+            </tbody>
+          </table>
+        <div *ngIf="isLoading" class="loading">Loading...</div>
+        <div *ngIf="!isLoading && leaderboard.length === 0" class="no-data">No leaderboard data available.</div>
+        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+      </div>
+      <button class="back-btn" (click)="navigateToHome()" aria-label="Go back to home">
+        <i class="fa fa-arrow-left"></i> Back
+      </button>
     </div>
-</div>
+  </div>

@@ -1,28 +1,38 @@
-<div class="join_cls" name="d1">
-    <h2 style="color:white;">QzHive</h2>
-    <table align="center">
-        <tr>
-            <td style="padding: 20px;">
-                <button name="b1" (click)="change(1)"><i class="fa fa-arrow-left"></i></button>
-            </td>
-            <td style="padding: 20px;">
-                <img name="i1" style="width:80px;height:80px;" [src]="imageSrc">
-            </td>
-            <td style="padding: 20px;">
-                <button name="b2" (click)="change(2)"><i class="fa fa-arrow-right"></i></button>
-            </td>
-        </tr>
-    </table>
-    <h2>Enter the Code to Join</h2>
-    <input type="text" name="code" placeholder="Enter Code" [(ngModel)]="quizCode">
-    <table align="center" style="padding-top: 30px;">
-        <tr>
-            <td style="padding-left: 20px;">
-                <button name="b3" (click)="navigateToQuizPage()">Join</button>
-            </td>
-            <td style="padding-left: 20px;">
-                <button name="b4" (click)="navigateToHome()">Back</button>
-            </td>
-        </tr>
-    </table>
-</div>
+<div class="join-container">
+    <div class="join-card">
+      <img src="image/icon_2.png" alt="QzHive Logo" class="logo">
+      <h2>Join a Quiz</h2>
+      <p class="instruction">Enter the quiz code to start your challenge!</p>
+      <div class="input-group">
+        <input
+          type="text"
+          name="code"
+          placeholder="Enter Quiz Code"
+          [(ngModel)]="quizCode"
+          (keyup.enter)="navigateToQuizPage()"
+          autofocus
+          aria-label="Quiz code input"
+        >
+        <div class="validation-message" *ngIf="quizCode && !isValidCode">
+          Invalid code. Please check and try again.
+        </div>
+      </div>
+      <div class="button-group">
+        <button
+          class="join-btn"
+          (click)="navigateToQuizPage()"
+          [disabled]="!quizCode"
+          aria-label="Join quiz"
+        >
+          <i class="fa fa-play"></i> Join
+        </button>
+        <button
+          class="back-btn"
+          (click)="navigateToHome()"
+          aria-label="Go back to home"
+        >
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </div>
+    </div>
+  </div>

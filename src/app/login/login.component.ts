@@ -16,6 +16,10 @@ export class LoginComponent {
   constructor(private auth:AuthService) {}
 
   onSubmit() {
+    if (!this.loginData.username || !this.loginData.password) {
+      alert('Please fill out all required fields.');
+      return;
+    }
     this.auth.login(this.loginData)
   }
 }

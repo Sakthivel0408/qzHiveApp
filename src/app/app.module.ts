@@ -11,12 +11,12 @@ import { RegisterComponent } from './register/register.component';
 import { JoinComponent } from './join/join.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { QuizPageComponent } from './quiz-page/quiz-page.component';
-import { ResetPassComponent } from './reset-pass/reset-pass.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { CreateQuizComponent } from './create-quiz/create-quiz.component';
 import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +27,12 @@ import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
     JoinComponent,
     QuizzesComponent,
     QuizPageComponent,
-    ResetPassComponent,
     AdminHomeComponent,
     ProfileComponent,
     LeaderboardComponent,
     CreateQuizComponent,
-    ManageQuizComponent
+    ManageQuizComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

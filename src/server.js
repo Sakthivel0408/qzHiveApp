@@ -32,8 +32,7 @@ app.post('/logging', async function (req, res) {
         };
         const token = jwt.sign(
             payload,
-            SECRET_KEY,
-            { expiresIn: '1h' }
+            SECRET_KEY
         );
         return res.status(200).json({ token: token, role: user.role });
     }
@@ -49,6 +48,55 @@ app.post('/insert', async function (req, res) {
     }
     await users_coll.insertOne({ name: fullname, gender: gender, email: email, country_code: country_code, phone: phone, username: username, password: password, role: "User" });
     return res.status(200).json({ message: "Successful Registration!", msg_clr: "green" });
+});
+
+app.post('/api/reset-password', async function (req, res) {
+    try {
+        const { oldPassword, newPassword } = req.body;
+
+        // Extract the username from the token (assuming JWT is used)
+        const token = req.headers.authorization?.split(' ')[1];
+        console.log('Token:', token);
+        if (!token) {
+            return res.status(401).send({ message: "Unauthorized" });
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, SECRET_KEY);
+            console.log('Decoded payload:', decoded);
+        } catch (error) {
+            return res.status(401).send({ message: "Invalid token" });
+        }
+
+        const username = decoded.username;
+
+        // Find the user
+        const user = await users_coll.findOne({ username });
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+
+        // Check if the old password matches
+        if (user.password !== oldPassword) {
+            return res.status(400).send({ message: "Old password is incorrect" });
+        }
+
+        // Update the password
+        const updateResult = await users_coll.updateOne(
+            { username },
+            { $set: { password: newPassword } }
+        );
+
+        if (updateResult.modifiedCount === 0) {
+            return res.status(500).send({ message: "Failed to update password" });
+        }
+
+        res.status(200).send({ message: "Password reset successfully" });
+    } catch (error) {
+        console.error("Error resetting password:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
 });
 
 app.get('/api/quizzes', async function (req, res) {
@@ -270,6 +318,90 @@ app.put('/api/update-quiz/:id', async function (req, res) {
         res.status(200).json({ message: "Quiz updated successfully", quiz: updatedQuiz.value });
     } catch (error) {
         console.error("Error updating quiz:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+});
+
+app.post('/api/submit-quiz', async function (req, res) {
+    try {
+        const { quizCode, score } = req.body;
+
+        // Extract the username from the token (assuming JWT is used)
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).send({ message: "Unauthorized" });
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, SECRET_KEY);
+        } catch (error) {
+            return res.status(401).send({ message: "Invalid token" });
+        }
+
+        const username = decoded.username;
+
+        // Find the user
+        const user = await users_coll.findOne({ username });
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+
+        // Update the user's document with the quiz code and score
+        const updateResult = await users_coll.updateOne(
+            { username },
+            {
+                $push: { quiz_attended_and_score: { quizCode, score } }
+            }
+        );
+
+        if (updateResult.modifiedCount === 0) {
+            return res.status(500).send({ message: "Failed to update user data" });
+        }
+
+        res.status(200).send({ message: "Quiz submission successful" });
+    } catch (error) {
+        console.error("Error submitting quiz:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+});
+
+app.get('/api/leaderboard', async function (req, res) {
+    try {
+        const quizCode = req.query.quizCode; // Optional query parameter for filtering by quiz code
+
+        // Build the query
+        const query = quizCode
+            ? { "quiz_attended_and_score.quizCode": quizCode }
+            : {};
+
+        // Aggregate leaderboard data
+        const leaderboard = await users_coll.aggregate([
+            { $match: query },
+            { $unwind: "$quiz_attended_and_score" },
+            {
+                $group: {
+                    _id: "$username",
+                    totalScore: { $sum: "$quiz_attended_and_score.score" }
+                }
+            },
+            { $sort: { totalScore: -1 } },
+            { $limit: 10 },
+            {
+                $project: {
+                    username: "$_id", // Rename _id to username
+                    totalScore: 1,
+                    _id: 0 // Exclude _id from the final result
+                }
+            }
+        ]).toArray();
+        console.log(leaderboard);
+        // Fetch distinct quiz codes for filtering options
+        const quizCodes = await quizzes_coll.distinct("code");
+
+        res.status(200).json({ leaderboard, quizCodes });
+    } catch (error) {
+        console.error("Error fetching leaderboard:", error);
         res.status(500).send({ message: "Internal server error" });
     }
 });

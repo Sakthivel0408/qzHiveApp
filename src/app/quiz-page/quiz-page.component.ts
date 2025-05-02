@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
+import { QuizService } from '../services/quiz-service/quiz.service';
 
 @Component({
   selector: 'app-quiz-page',
@@ -14,7 +15,7 @@ export class QuizPageComponent implements OnInit {
   errorMessage: string | null = null;
   score: number | null = null;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private quizService: QuizService) {
     const token = localStorage.getItem('token');
     if (!token) {
       this.router.navigate(['/login']);
@@ -31,7 +32,7 @@ export class QuizPageComponent implements OnInit {
     }
 
     // Fetch the quiz data from the API
-    this.http.get<any>(`http://localhost:5000/api/quiz/${this.quizCode}`).subscribe({
+    this.quizService.getQuizByCode(this.quizCode).subscribe({
       next: (quiz) => {
         console.log('Quiz fetched successfully:', quiz);
         if (!quiz.questions || quiz.questions.length === 0) {
@@ -57,7 +58,6 @@ export class QuizPageComponent implements OnInit {
 
     this.quiz.questions.forEach((question: any, index: number) => {
         const userAnswer = parseInt(formData[`question${index}`], 10);
-        console.log(question.correctOptionIndex)
         if (userAnswer === question.correctOptionIndex) {
             score++;
         }
@@ -65,12 +65,22 @@ export class QuizPageComponent implements OnInit {
 
     this.score = score;
     console.log('Score:', score);
-    alert(`You scored ${score} out of ${this.quiz.questions.length}`);
-    }
 
-    exitQuiz(): void {
-      if (confirm('Are you sure you want to exit the quiz? Your progress will not be saved.')) {
-        this.router.navigate(['/home']);
-      }
+    this.quizService.submitQuiz(this.quiz.code, this.score).subscribe({
+        next: (response) => {
+            console.log('Quiz submission successful:', response);
+            alert(`You scored ${score} out of ${this.quiz.questions.length}`);
+        },
+        error: (error) => {
+            console.error('Error submitting quiz:', error);
+            alert('Failed to submit quiz. Please try again.');
+        }
+    });
+  }
+
+  exitQuiz(): void {
+    if (confirm('Are you sure you want to exit the quiz? Your progress will not be saved.')) {
+      this.router.navigate(['/home']);
     }
+  }
 }

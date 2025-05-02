@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,12 @@ export class AuthService {
         passwordMessageColor: 'red' 
       };
       });
+  }
+  resetPassword(oldPassword: string, newPassword: string): Observable<any> {
+    const payload = { oldPassword, newPassword };
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    console.log(token);
+    return this.http.post('http://localhost:5000/api/reset-password', payload, { headers });
   }
 }
