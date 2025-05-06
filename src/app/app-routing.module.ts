@@ -12,23 +12,24 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { CreateQuizComponent } from './create-quiz/create-quiz.component';
 import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { authGuardGuard } from './auth-guard.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: UserHomeComponent},
-  {path: 'admin-home', component: AdminHomeComponent},
+  { path: 'home', component: UserHomeComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
+  {path: 'admin-home', component: AdminHomeComponent, canActivate: [authGuardGuard], data: { role: 'Admin' }},
   { path: 'register', component: RegisterComponent},
-  { path: 'join', component: JoinComponent},
-  { path: 'quizzes', component: QuizzesComponent},
+  { path: 'join', component: JoinComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
+  { path: 'quizzes', component: QuizzesComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
   { path: 'reset-password', component: ResetPasswordComponent},
-  { path: 'quiz-page', component: QuizPageComponent},
-  { path: 'profile', component: ProfileComponent},
-  { path: 'leaderboard', component: LeaderboardComponent},
-  { path: 'create-quiz', component: CreateQuizComponent},
-  { path: 'manage-quizzes', component: ManageQuizComponent},
-  { path: 'leaderboard', component: LeaderboardComponent}
-  // Add other routes like register, home, etc.
+  { path: 'quiz-page', component: QuizPageComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
+  { path: 'leaderboard', component: LeaderboardComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
+  { path: 'create-quiz', component: CreateQuizComponent, canActivate: [authGuardGuard], data: { role: 'Admin' }},
+  { path: 'manage-quizzes', component: ManageQuizComponent, canActivate: [authGuardGuard], data: { role: 'Admin' }},
+  { path: 'leaderboard', component: LeaderboardComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
