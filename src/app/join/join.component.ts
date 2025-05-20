@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-join',
@@ -42,32 +43,58 @@ export class JoinComponent implements OnInit {
 
     this.isLoading = true;
 
-    // Validate the quiz code by making an API call
-    this.http.get(`http://localhost:5000/api/quiz/${this.quizCode}`).subscribe({
-      next: (response: any) => {
-        this.isValidCode = true;
-        this.errorMessage = null;
+    const token: any= localStorage.getItem('token');
+    if (!token)
+    {
+      this.errorMessage = 'You are not logged in. Please log in to continue.';
+      this.isLoading = false;
+      return;
+    }
+    const decodedToken: any = JSON.parse(atob(token.split('.')[1]));
+    const username = decodedToken.username;
 
-        // Store the quiz code in localStorage and navigate to the quiz page
-        localStorage.setItem('quizCode', this.quizCode);
-        this.router.navigate(['/quiz-page']).finally(() => {
-          this.isLoading = false;
-        });
+    this.http.get(`${environment.apiBaseUrl}/api/user/${username}`).subscribe({
+      next: (user: any) => {
+          const attendedQuizzes = user.quiz_attended_and_score || [];
+          const hasAttended = attendedQuizzes.some((quiz: any) => quiz.quizCode === this.quizCode);
+
+          if (hasAttended) {
+              this.errorMessage = 'You have already attended this quiz.';
+              this.isLoading = false;
+              return;
+          }
+
+          // Validate the quiz code by making an API call
+          this.http.get(`${environment.apiBaseUrl}/api/quiz/${this.quizCode}`).subscribe({
+              next: (response: any) => {
+                  this.isValidCode = true;
+                  this.errorMessage = null;
+
+                  // Store the quiz code in localStorage and navigate to the quiz page
+                  localStorage.setItem('quizCode', this.quizCode);
+                  this.router.navigate(['/quiz-page']).finally(() => {
+                      this.isLoading = false;
+                  });
+              },
+              error: (error) => {
+                  this.isValidCode = false;
+                  this.errorMessage = 'Invalid quiz code. Please try again.';
+                  console.error('Error validating quiz code:', error);
+                  this.isLoading = false;
+              }
+          });
       },
       error: (error) => {
-        this.isValidCode = false;
-        this.errorMessage = 'Invalid quiz code. Please try again.';
-        console.error('Error validating quiz code:', error);
-        this.isLoading = false;
+          this.errorMessage = 'Failed to fetch user data. Please try again.';
+          console.error('Error fetching user data:', error);
+          this.isLoading = false;
       }
     });
   }
 
-  // Optional: Real-time validation method (if you want to validate as the user types)
   validateCode(): void {
-    this.isValidCode = this.quizCode.trim().length > 0; // Placeholder logic
-    // For real validation, you might call a service:
-    this.http.get(`http://localhost:5000/api/quiz/${this.quizCode}`).subscribe(
+    this.isValidCode = this.quizCode.trim().length > 0;
+    this.http.get(`${environment.apiBaseUrl}/api/quiz/${this.quizCode}`).subscribe(
       () => this.isValidCode = true,
       () => this.isValidCode = false
     );

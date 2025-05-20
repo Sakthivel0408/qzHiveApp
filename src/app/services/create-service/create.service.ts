@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class CreateService {
     }
 
     // Send quiz data to API
-    return this.http.post<any>('http://localhost:5000/api/quiz', quizData).pipe(
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/quiz`, quizData).pipe(
       map((response) => response),
       catchError((error) => {
         console.error('Error:', error);

@@ -17,6 +17,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { CreateQuizComponent } from './create-quiz/create-quiz.component';
 import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AdminQuizDetailsComponent } from './admin-quiz-details/admin-quiz-details.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LeaderboardComponent,
     CreateQuizComponent,
     ManageQuizComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AdminQuizDetailsComponent
   ],
   imports: [
     BrowserModule,

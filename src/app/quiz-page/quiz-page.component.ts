@@ -39,6 +39,9 @@ export class QuizPageComponent implements OnInit {
           this.errorMessage = 'No questions available.';
           return;
         }
+        quiz.questions.forEach((question: any) => {
+          question.options = this.shuffleArray(question.options);
+        });
         this.quiz = quiz;
       },
       error: (error) => {
@@ -70,6 +73,7 @@ export class QuizPageComponent implements OnInit {
         next: (response) => {
             console.log('Quiz submission successful:', response);
             alert(`You scored ${score} out of ${this.quiz.questions.length}`);
+            this.router.navigate(['/home']);
         },
         error: (error) => {
             console.error('Error submitting quiz:', error);
@@ -82,5 +86,13 @@ export class QuizPageComponent implements OnInit {
     if (confirm('Are you sure you want to exit the quiz? Your progress will not be saved.')) {
       this.router.navigate(['/home']);
     }
+  }
+
+  private shuffleArray(array: any[]): any[] {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 }

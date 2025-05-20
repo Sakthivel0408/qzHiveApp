@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-quizzes',
@@ -24,7 +25,7 @@ export class QuizzesComponent implements OnInit {
   }
 
   fetchQuizzes(): void {
-    this.http.get<any[]>('http://localhost:5000/api/quizzes').subscribe({
+    this.http.get<any[]>(`${environment.apiBaseUrl}/api/quizzes`).subscribe({
       next: (response) => {
         this.quizzes = response;
         console.log("ok")

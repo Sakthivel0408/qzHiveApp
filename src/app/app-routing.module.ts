@@ -13,6 +13,7 @@ import { CreateQuizComponent } from './create-quiz/create-quiz.component';
 import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { authGuardGuard } from './auth-guard.guard';
+import { AdminQuizDetailsComponent } from './admin-quiz-details/admin-quiz-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'create-quiz', component: CreateQuizComponent, canActivate: [authGuardGuard], data: { role: 'Admin' }},
   { path: 'manage-quizzes', component: ManageQuizComponent, canActivate: [authGuardGuard], data: { role: 'Admin' }},
   { path: 'leaderboard', component: LeaderboardComponent, canActivate: [authGuardGuard], data: { role: 'User' }},
+  { path: 'admin-quiz-details', component: AdminQuizDetailsComponent, canActivate: [authGuardGuard], data: {role: 'Admin'}},
   { path: '**', redirectTo: '/home' }
 ];
 

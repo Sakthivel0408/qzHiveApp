@@ -51,6 +51,19 @@ export class RegisterComponent {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    // console.log(this.phone)
+    if (!phoneRegex.test(this.phone)) {
+        alert('Please enter a valid 10-digit phone number.');
+        return;
+    }
+
     if (!this.passwordRegex.test(this.password)) {
       this.passwordMessage = 'Password must be at least 8 characters long, include 1 uppercase letter, 1 lowercase letter, and 1 number.';
       this.passwordMessageColor = 'red';

@@ -1,0 +1,29 @@
+<div class="admin-quiz-details-container">
+  <header class="header">
+    <h1>Quiz Details</h1>
+  </header>
+
+  <table class="details-table" *ngIf="userQuizDetails.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>Quiz ID</th>
+        <th>Quiz Name</th>
+        <th>Participants</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr *ngFor="let detail of userQuizDetails">
+            <td>{{ detail.username }}</td>
+            <td>{{ detail.quiz_attended_and_score.quizCode }}</td>
+            <td>{{ detail.quizTitle }}</td>
+            <td>{{ detail.quiz_attended_and_score.score }}</td>
+          </tr>
+        </tbody>
+  </table>
+
+  <ng-template #noData>
+    <p class="error-message">No quiz details available.</p>
+  </ng-template>
+  <button class="btn back-btn" (click)="goBack()">Back</button>
+</div>

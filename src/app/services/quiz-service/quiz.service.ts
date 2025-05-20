@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
-  private apiUrl = 'http://localhost:5000/api';
+  // private apiUrl = `${environment.apiBaseUrl}/api`;
 
   constructor(private http: HttpClient) {}
 
@@ -15,10 +16,10 @@ export class QuizService {
     const token = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
-    return this.http.post(`${this.apiUrl}/submit-quiz`, payload, { headers });
+    return this.http.post(`${environment.apiBaseUrl}/api/submit-quiz`, payload, { headers });
   }
   getQuizByCode(quizCode: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/quiz/${quizCode}`);
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/quiz/${quizCode}`);
   }
 
 }

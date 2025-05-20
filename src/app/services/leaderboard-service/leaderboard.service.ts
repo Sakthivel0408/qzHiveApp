@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 interface LeaderboardEntry {
   _id: string; // Add this to match the server response
@@ -17,7 +18,7 @@ interface LeaderboardResponse {
   providedIn: 'root'
 })
 export class LeaderboardService {
-  private apiUrl = 'http://localhost:5000/api/leaderboard';
+  private apiUrl = `${environment.apiBaseUrl}/api/leaderboard`;
 
   constructor(private http: HttpClient) {}
 

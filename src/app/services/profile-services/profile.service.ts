@@ -1,12 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = 'http://localhost:5000/update-profile'; // Adjust the URL to match your server
+  private apiUrl = `${environment.apiBaseUrl}/update-profile`; // Adjust the URL to match your server
 
   constructor(private http: HttpClient) {}
 

@@ -96,6 +96,20 @@
         }
     });
 
+    app.get('/api/user/:username', async (req, res) => {
+        try {
+            const username = req.params.username;
+            const user = await users_coll.findOne({ username });
+            if (!user) {
+                return res.status(404).send({ message: "User not found" });
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+            res.status(500).send({ message: "Internal server error" });
+        }
+    });
+
     app.get('/api/quiz/:code', async function (req, res) {
         try {
             const quizCode = req.params.code;
@@ -333,6 +347,52 @@
         }
     });
 
+    app.get('/api/user-quiz-details', async (req, res) => {
+        try {
+            const userQuizDetails = await users_coll.aggregate([
+                { $unwind: "$quiz_attended_and_score" },
+                {
+                    $lookup: {
+                        from: "quizzes",
+                        localField: "quiz_attended_and_score.quizCode",
+                        foreignField: "code",
+                        as: "quizDetails"
+                    }
+                },
+                {
+                    $project: {
+                        username: 1,
+                        "quiz_attended_and_score.quizCode": 1,
+                        "quiz_attended_and_score.score": 1,
+                        quizTitle: { $arrayElemAt: ["$quizDetails.title", 0] }
+                    }
+                }
+            ]).toArray();
+            console.log(userQuizDetails);
+            res.status(200).json(userQuizDetails);
+        } catch (error) {
+            console.error("Error fetching user quiz details:", error);
+            res.status(500).send({ message: "Internal server error" });
+        }
+    });
+
+    app.get('/api/quiz-max-marks/:code', async (req, res) => {
+        try {
+            const quizCode = req.params.code;
+            const quiz = await quizzes_coll.findOne({ code: quizCode });
+    
+            if (!quiz) {
+                return res.status(404).send({ message: "Quiz not found" });
+            }
+    
+            const maxMarks = quiz.questions ? quiz.questions.length : 0;
+            res.status(200).json({ quizCode, maxMarks });
+        } catch (error) {
+            console.error("Error fetching maximum marks for quiz:", error);
+            res.status(500).send({ message: "Internal server error" });
+        }
+    });
+    
     app.listen(5000, async function () {
         mongCli = await MongoClient.connect("mongodb://localhost:27017/");
         users_coll = await mongCli.db('qzhive').collection('users');
