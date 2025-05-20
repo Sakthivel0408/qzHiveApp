@@ -112,51 +112,51 @@ Below are screenshots showcasing the platform’s intuitive UI:
 
 ### Login Page
 - Fields for username and password with a clean, glass-effect design.
-![Login Page](images/Pasted%20image%2020250520190949.png)
+![Login Page](output/login.png)
 
 ### Register Page
 - Form for new user registration, including name, email, and phone.
-![Register Page](images/Pasted%20image%2020250520191027.png)
+![Register Page](output/register.png)
 
 ### User-Home Page
 - User dashboard with links to join quizzes and view leaderboards.
-![User-Home Page](images/Pasted%20image%2020250520191105.png)
+![User-Home Page](output/user-home.png)
 
 ### View-Quizzes Page
 - Lists available quizzes with category and difficulty details.
-![View-Quizzes Page](images/Pasted%20image%2020250520191128.png)
+![View-Quizzes Page](output/view-quizzes.png)
 
 ### Leaderboard Page
 - Displays top users’ scores, encouraging competition.
-![Leaderboard Page](images/Pasted%20image%2020250520191138.png)
+![Leaderboard Page](output/leaderboard.png)
 
 ### Profile Page
 - Shows user details with options to edit.
-![Profile Page](images/Pasted%20image%2020250520191148.png)
+![Profile Page](output/profile.png)
 
 ### Reset-Password Page
 - Form to securely update user passwords.
-![Reset-Password Page](images/Pasted%20image%2020250520191217.png)
+![Reset-Password Page](output/reset-password.png)
 
 ### Join Page
 - Allows users to enter a quiz code to participate.
-![Join Page](images/Pasted%20image%2020250520191225.png)
+![Join Page](output/join-page.png)
 
 ### Quiz Page
 - Displays questions with options for user responses.
-![Quiz Page](images/Pasted%20image%2020250520191235.png)
+![Quiz Page](output/quiz-page.png)
 
 ### Admin-Home Page
 - Admin dashboard for managing quizzes.
-![Admin-Home Page](images/Pasted%20image%2020250520191243.png)
+![Admin-Home Page](output/admin-home.png)
 
 ### Create-Quiz Page
 - Form for admins to create quizzes with a transparent glass-effect UI.
-![Create-Quiz Page](images/Pasted%20image%2020250520191253.png)
+![Create-Quiz Page](output/create-quiz.png)
 
 ### Manage-Quiz Page
 - Lists quizzes with options to edit or delete, styled with a glass effect.
-![Manage-Quiz Page](images/Pasted%20image%2020250520191303.png)
+![Manage-Quiz Page](output/manage-quiz.png)
 
 ## Installation
 ### Prerequisites
